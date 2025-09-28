@@ -1,0 +1,164 @@
+give me the list of all loops, conditionals, notifications, or handlers, keyword or modules used in deviops
+ChatGPT said:
+
+Ah, gotcha! You want a DevOps cheat sheet—basically a list of all the “control structures” and automation constructs used across DevOps tools, like Ansible, Jenkins, Terraform, Kubernetes, and some Python scripting that’s used in pipelines. I’ll break it down tool-wise and concept-wise so you can see patterns. I’ll include loops, conditionals, notifications, handlers, keywords, and modules wherever applicable.
+
+1. Ansible
+Loops
+
+loop: — generic loop over items
+
+with_items: — older syntax, still works
+
+with_dict: — loop over dictionary items
+
+with_list: — loop over lists
+
+with_nested: — nested loops
+
+with_fileglob: — loop over files matching glob
+
+until: — retry loop until a condition is met
+
+loop_control: — for controlling loop labels, index, etc.
+
+Conditionals
+
+when: — execute task conditionally
+
+failed_when: — mark task failed based on condition
+
+changed_when: — mark task changed based on condition
+
+Handlers
+
+handlers: — define special tasks that only run when notified
+
+notify: — trigger a handler
+
+Notifications / Alerts
+
+Mostly via handlers (email, Slack, custom modules)
+
+External modules: mail, slack, pagerduty, opsgenie
+
+Keywords / Modules
+
+Common modules:
+
+file, copy, template, yum, apt, service, command, shell, git, user, cron, docker_container, docker_image
+
+Keywords:
+
+hosts, tasks, vars, register, become, tags, delegate_to, ignore_errors, include_tasks, import_tasks
+
+2. Jenkins (Declarative Pipeline / Groovy)
+Loops
+
+for, while — standard Groovy loops
+
+each, eachWithIndex — Groovy collection iterators
+
+Conditionals
+
+if, else, elseif — standard Groovy
+
+when — pipeline declarative conditionals
+
+Notifications
+
+emailext — email notifications
+
+slackSend — Slack notifications
+
+mail — built-in email
+
+step([$class: …]) — can call custom notifications
+
+Handlers / Triggers
+
+triggers {} — cron, GitHub webhook, SCM polling
+
+post {} — defines steps for always, success, failure, unstable, changed
+
+3. Terraform
+Loops
+
+for_each — iterate over map or list
+
+count — create multiple resources
+
+for expressions — inline looping for variables
+
+dynamic blocks — loop inside resource blocks
+
+Conditionals
+
+count = condition ? 1 : 0 — create resource conditionally
+
+if, else in expressions
+
+lookup() with defaults for conditional data
+
+Notifications
+
+Not native; usually via integrations (OpsGenie, Slack, AWS SNS, etc.)
+
+4. Kubernetes (YAML)
+Loops & Conditionals
+
+Not natively supported in YAML — use Helm or Kustomize:
+
+Helm templates: {{ range .Values.items }} … {{ end }}
+
+if, else, with — conditional rendering in Helm
+
+Notifications
+
+Not native; handled externally:
+
+Prometheus Alerts → Alertmanager → Slack/email/PagerDuty
+
+Handlers
+
+postStart, preStop hooks in pod spec
+
+5. Python / Shell in DevOps Scripts
+Loops
+
+for, while
+
+for index, item in enumerate(list):
+
+List comprehensions: [x for x in list if x%2==0]
+
+Conditionals
+
+if, elif, else
+
+Exception handling: try/except/finally
+
+Notifications
+
+smtplib for email
+
+requests to hit Slack webhook / Teams
+
+Custom logging: logging module
+
+6. Common DevOps Concepts Across Tools
+Concept	Tools / Keywords
+Loop	loop, for_each, count, for, while, range
+Conditional	when, if, else, elseif, ternary operators
+Handler / Trigger	handlers, notify, post {}, triggers, hooks
+Notification	slackSend, mail, emailext, smtplib, pagerduty
+Retry / Wait	until, retries, delay, wait_for, sleep
+Include / Import	include_tasks, import_tasks, include_role, source
+Variable / Register	vars, set_fact, register, env, output, lookup
+
+
+
+
+
+
+

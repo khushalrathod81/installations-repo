@@ -1,0 +1,96 @@
+sudo apt update
+sudo apt upgrade
+
+# 1. Install java
+
+sudo apt install openjdk-17-jdk -y
+java -version
+
+# 2. Create a directory app and switch to that dir
+
+Sudo mkdir /app && cd /app
+
+# 3. Download nexus 
+Copy the link from site with appropriate version of nexus with wget (link copied)
+
+#Like this mkdir /app && cd /app
+wget https://download.sonatype.com/nexus/3/nexus-3.84.1-01-linux-x86_64.tar.gz
+
+# 4.untar the file
+
+tar -xzvf nexus-3.84.1-01-linux-x86_64.tar.gz
+
+# 5.rename the file to nexus
+
+mv nexus-3.84.1-01 nexus
+
+# 6. Install the locales package
+
+sudo apt update
+sudo apt install locales
+# run below cmd line and select en_US.UTF-8 with spacebar and follow the process
+
+sudo dpkg-reconfigure locales
+
+Set it as default
+
+sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+
+Reload the locale settings
+
+source /etc/default/locale
+
+
+or log out and log back in.
+
+Verify
+
+locale
+
+Create user nexus
+sudo useradd nexus
+
+Change ownership of nexus files
+sudo chown -R nexus:nexus /app/nexus /app/sonatype-work
+
+6️⃣ Test binaries
+su - nexus
+cd /app/nexus/bin
+./nexus status
+
+Systemd service setup
+
+Create /etc/systemd/system/nexus.service with something like:
+
+vi /etc/systemd/system/nexus.service
+
+Paste this into the file and save:
+
+[Unit]
+Description=Nexus Repository Manager
+After=network.target
+
+[Service]
+Type=forking
+User=nexus
+Group=nexus
+ExecStart=/app/nexus/bin/nexus start
+ExecStop=/app/nexus/bin/nexus stop
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+
+Then enable & start service:
+
+sudo systemctl daemon-reload
+sudo systemctl enable nexus
+sudo systemctl start nexus
+sudo systemctl status nexus
+
+
+
+
+Done.........

@@ -1,0 +1,7 @@
+sonar.projectKey=CI-CD-job
+sonar.projectName=CI-CD-job
+sonar.projectVersion=1.0
+sonar.sources=/var/lib/jenkins/workspace/CI-CD-job/src/main
+sonar.java.binaries=/var/lib/jenkins/workspace/CI-CD-job/target/classes/
+sonar.host.url=http://34.93.60.109:9000
+sonar.login=squ_f4900384ce93eaae038efdb77d228e19517e4791

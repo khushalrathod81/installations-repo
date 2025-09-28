@@ -1,0 +1,38 @@
+# 1. Update system
+sudo apt update && sudo apt upgrade -y
+
+# 2. Install Java (required for Jenkins) Jenkins 2.x LTS requires Java 17 or newer. Debian 12 already supports OpenJDK 17.
+
+sudo apt install -y fontconfig openjdk-17-jre
+
+
+# Verify Java:
+
+java -version
+
+
+# Expected → openjdk version "17.x..."
+
+
+# 3. Add Jenkins repository key
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+# 4. Add Jenkins apt repo
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | \
+  sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+# 5. Install Jenkins
+sudo apt update
+sudo apt install -y jenkins
+
+# 6. Start and enable Jenkins
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+
+
+# Check status:
+
+systemctl status jenkins
+

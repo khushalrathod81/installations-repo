@@ -1,0 +1,30 @@
+## Step 1: Update system
+sudo dnf update -y
+
+## Step 2: Install Java 21 (Amazon Corretto)
+
+# Amazon Linux 2023 already has Amazon Corretto builds of OpenJDK.
+
+sudo dnf install java-21-amazon-corretto -y
+
+# verify 
+
+java -version
+
+# Step 3: Set environment variables
+
+# Instead of messing with /etc/profile directly, you should use etc/profile.d/java.sh.
+
+echo 'export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto' | sudo tee /etc/profile.d/java.sh
+echo 'export PATH=$JAVA_HOME/bin:$PATH' | sudo tee -a /etc/profile.d/java.sh
+
+
+# Apply it:
+
+source /etc/profile.d/java.sh
+
+
+# check:
+
+echo $JAVA_HOME
+which java

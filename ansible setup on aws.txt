@@ -1,0 +1,63 @@
+# create two instances and connect
+# give one instance name control machine (CM) and other remote machine (RM)
+# create ansible user and give Sudo privileges to ansible in both instances under root
+useradd ansible
+visudo 
+#	under visudo copy root access and paste it and replace root with ansible in pasted line
+	root    ALL=(ALL:ALL) ALL
+	ansible ALL=(ALL:ALL) ALL
+#save it
+# switch to ansible on both machines home location
+su ansible
+cd
+pwd 
+whoami
+
+# now on CM create ssh key
+ssh-keygen
+
+# go to .ssh folder and open id-rsa.pub using cat like  
+cat id_rsa.pub
+
+# now on RM 
+
+on home location (run cd) and create .ssh folder and inside it create authorized_keys file and change their permissions
+
+mkdir .ssh
+chmod 700 .ssh/
+cd .ssh
+vi authorized_keys
+#	paste the id_rsa.pub content copied from CM and save :wq
+chmod 600 authorized_keys
+ls -l
+# it should look like -rw-------. 1 ansible ansible 606 Sep 25 12:47 authorized_keys
+# now the prerequisites are done
+
+### INSTALL ANSIBLE ###
+# Step 1: Update your system
+sudo dnf update -y
+sudo dnf install -y dnf-utils
+
+#Amazon Linux 2023 is different ,AL2023 is modern and already has many packages in its main repos, including Ansible. You don’t actually need EPEL for most things anymore. Trying to use epel-release-latest-9 breaks because AL2023 doesn’t have redhat-release. so just 
+
+#We were installing EPEL because that’s the classic RHEL/CentOS approach, but on AL2023 it’s unnecessary and even a hassle.
+
+#✅ Instead, you can just do:
+
+sudo dnf install -y ansible
+ansible --version
+
+
+#And you’re done—no EPEL needed. just run,
+sudo dnf install -y ansible
+
+#Then verify:
+ansible --version
+
+#And test localhost ping:
+ansible localhost -m ping
+
+
+#✅ Expected output:
+#
+#localhost | SUCCESS => {"changed":false,"ping":"pong"}
