@@ -77,7 +77,7 @@
               <role rolename="manager-status"/>
               <role rolename="admin-gui"/>
               <role rolename="admin-script"/>
-              <user username="admin" password="khushal123" roles="manager-gui,manager-script,manager-status,admin-gui,admin-script"/>
+              <user username="admin" password="admin123" roles="manager-gui,manager-script,manager-status,admin-gui,admin-script"/>
           </tomcat-users>
         owner: tomcat
         group: tomcat
